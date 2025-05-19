@@ -103,9 +103,6 @@ class Matricula(models.Model):
     data_inicio = models.DateField()
     data_previsao_termino = models.DateField()
 
-    def __str__(self):
-        return f"{self.pessoa} - {self.curso}"
-
     class Meta:
         verbose_name = "Matrícula"
         verbose_name_plural = "Matrículas"
@@ -143,11 +140,13 @@ class Frequencia(models.Model):
         verbose_name = "Frequência"
         verbose_name_plural = "Frequências"
 
+
 class Turno(models.Model):
-    nome = models.CharField(max_length=50)
+    nome = models.CharField(max_length=100)
 
     def __str__(self):
         return self.nome
+
 
     class Meta:
         verbose_name = "Turno"
@@ -156,9 +155,10 @@ class Turno(models.Model):
 class Ocorrencia(models.Model):
     descricao = models.TextField()
     data = models.DateField()
-    curso = models.ForeignKey('Curso', on_delete=models.CASCADE)
-    disciplina = models.ForeignKey('Disciplina', on_delete=models.CASCADE)
-    pessoa = models.ForeignKey('Pessoa', on_delete=models.CASCADE)
+    curso = models.ForeignKey(Curso, on_delete=models.SET_NULL, null=True, blank=True)
+    disciplina = models.ForeignKey(Disciplina, on_delete=models.SET_NULL, null=True, blank=True)
+    pessoa = models.ForeignKey(Pessoa, on_delete=models.SET_NULL, null=True, blank=True)
+
 
     class Meta:
         verbose_name = "Ocorrência"
@@ -171,5 +171,5 @@ class CursoDisciplina(models.Model):
     periodo = models.CharField(max_length=10)
 
     class Meta:
-        verbose_name = "Curso/Disciplina"
-        verbose_name_plural = "Cursos/Disciplinas"
+        verbose_name = "cursodisciplina"
+        verbose_name_plural = "cursosdisciplinas"
